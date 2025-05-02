@@ -1,23 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+ import './App.css';
+import Header from './Header';
+import Header2 from './Header2';
+import TopSection from './TopSection';
+import Header3 from './Header3';
+import Listing from './Listing';
+// import WeeklyPopular from './WeeklyPopular';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Header2/>
+      <TopSection/>
+      <Header3/>
+      <Listing/>
+      {/* <WeeklyPopular/> */}
     </div>
   );
 }

@@ -1,0 +1,100 @@
+.weekly-popular {
+    padding: 2rem 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.weekly-popular-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    width: 100%;
+}
+
+.weekly-popular-header h1 {
+    font-size: 2rem;
+    color: #333;
+}
+
+.weekly-popular-row {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+}
+
+.weekly-popular-item {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+    position: relative;
+    width: 250px; /* Fixed width for each item */
+    flex-shrink: 0;
+}
+
+/* Keep all other styles from previous WeeklyPopularItem.css */
+.add-to-favorites {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.weekly-popular-image {
+    width: 100%;
+    height: 200px;
+    margin-bottom: 1rem;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.weekly-popular-image:hover {
+    transform: scale(1.05);
+}
+
+.item-name-price {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.item-name {
+    font-size: 1.1rem;
+    color: #333;
+    margin: 0;
+}
+
+.item-price {
+    font-weight: bold;
+    color: #003d29;
+    font-size: 1.1rem;
+}
+
+.item-description {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.star-rating-number {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.star-rating {
+    display: flex;
+}
+
+.item-number {
+    color: #666;
+    font-size: 0.8rem;
+}
