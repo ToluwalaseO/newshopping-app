@@ -4,7 +4,8 @@ import Header2 from './Header2';
 import TopSection from './TopSection';
 import Header3 from './Header3';
 import Listing from './Listing';
-// import WeeklyPopular from './WeeklyPopular';
+import WeeklyPopular from './WeeklyPopular';
+import Services from './Services';
 
 
 function App() {
@@ -15,7 +16,8 @@ function App() {
       <TopSection/>
       <Header3/>
       <Listing/>
-      {/* <WeeklyPopular/> */}
+      <WeeklyPopular/>
+      <Services/>
     </div>
   );
 }

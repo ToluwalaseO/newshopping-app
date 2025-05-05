@@ -5,12 +5,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    font-family: Georgia, serif;
 }
 
 .weekly-popular-header {
-    text-align: center;
+    text-align: left;
     margin-bottom: 2rem;
     width: 100%;
+    
 }
 
 .weekly-popular-header h1 {
@@ -35,6 +37,11 @@
     width: 250px; /* Fixed width for each item */
     flex-shrink: 0;
 }
+.weekly-popular-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
+    gap: 20px; /* space between items */
+  }
 
 /* Keep all other styles from previous WeeklyPopularItem.css */
 .add-to-favorites {
