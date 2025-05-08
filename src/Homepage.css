@@ -1,0 +1,122 @@
+.homepage {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 10%;
+    color: #fff;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+    font-family: Georgia, serif; /* Fixed font-family syntax */
+    min-height: 100vh; /* Better than height: 100vh for responsiveness */
+    width: 100%;
+  }
+  
+  .homepage::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 0;
+  }
+  
+  .homepage-title {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 1.5rem;
+    width: 100%; /* Ensures proper alignment */
+  }
+  
+  .homepage-title h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0;
+    
+    text-align: left; /* Changed from justify-content to text-align */
+    display: block; /* Ensures proper stacking */
+  }
+  
+  
+  .homepage-description {
+    position: relative;
+    z-index: 1;
+    margin-bottom: 2.5rem;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    max-width: 600px; /* Prevents overly long lines on wide screens */
+  }
+  
+  .homepage-description p {
+    margin: 0; /* Remove default margins */
+    display: block; /* Ensure each p stacks vertically */
+    line-height: 1.6; /* Consistent line height */
+    text-align: left;
+  }
+  
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    .homepage-description p {
+      text-align: center; /* Center text on mobile */
+    }
+  }
+  
+  .homepage-button {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .homepage-button button {
+    background-color: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 12px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 30px;
+    font-family: inherit; /* Ensures button uses the same font */
+  }
+  
+  .homepage-button button:hover {
+    background-color: white;
+    color: black;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .homepage {
+      padding: 0 5%;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .homepage-title {
+      text-align: center; /* Center title on mobile */
+    }
+    
+    .homepage-title h1 {
+      font-size: 2.5rem;
+    }
+    
+    .homepage-description {
+      font-size: 1rem;
+      text-align: center; /* Center description on mobile */
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .homepage-title h1 {
+      font-size: 2rem;
+    }
+    
+    .homepage-button button {
+      padding: 10px 25px; /* Slightly smaller button on mobile */
+    }
+  }

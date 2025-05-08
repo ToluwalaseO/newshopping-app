@@ -6,6 +6,7 @@ import Header3 from './Header3';
 import Listing from './Listing';
 import WeeklyPopular from './WeeklyPopular';
 import Services from './Services';
+import Homepage from './Homepage';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Listing/>
       <WeeklyPopular/>
       <Services/>
+      <Homepage/>
     </div>
   );
 }
