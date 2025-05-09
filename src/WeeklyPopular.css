@@ -40,7 +40,9 @@
 .weekly-popular-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* 4 equal columns */
-    gap: 20px; /* space between items */
+    gap: 40px; /* space between items */
+    position: relative;
+    right: 10px;
   }
 
 /* Keep all other styles from previous WeeklyPopularItem.css */
@@ -104,4 +106,21 @@
 .item-number {
     color: #666;
     font-size: 0.8rem;
+}
+
+.add-to-cart {
+    width: 120px;
+    padding: 0.5rem;
+    background: white;
+    color: black;
+    border: 2px solid black;
+    border-radius: 24px;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: all 0.2s ease;
+}
+
+.add-to-cart:hover {
+    background: black;
+    color: white;
 }

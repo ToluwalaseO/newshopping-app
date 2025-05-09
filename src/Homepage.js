@@ -12,7 +12,7 @@ const Homepage = () => {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            height: '100vh', // or whatever height you want
+            height: '100vh',
             width: '100%'
         }}>
             <div className="homepage-title"> 

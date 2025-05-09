@@ -1,35 +1,33 @@
-// import React, { useState, useRef, useEffect } from "react";
-// import Popular from "./Popular"; 
-// import Part2 from "./Part2";
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
+import Popular from "./Popular"; 
+import WeeklyPopular from "./WeeklyPopular";
 import "./Header2.css";
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import SearchIcon from '@mui/icons-material/Search';
 import PersonIcon from '@mui/icons-material/Person';
 
 const Header2 = () => {
-    // State and effect logic removed
-    // const [clickCount, setClickCount] = useState(0);
-    // const searchRef = useRef(null);
+    const [clickCount, setClickCount] = useState(0);
+    const searchRef = useRef(null);
 
-    // useEffect(() => {
-    //     const handleClickOutside = (event) => {
-    //         if (searchRef.current && !searchRef.current.contains(event.target)) {
-    //             setClickCount(0); 
-    //         }
-    //     };
-    //     document.addEventListener("mousedown", handleClickOutside);
-    //     return () => {
-    //         document.removeEventListener("mousedown", handleClickOutside);
-    //     };
-    // }, []);
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (searchRef.current && !searchRef.current.contains(event.target)) {
+                setClickCount(0); 
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
 
-    // const getDropdownContent = () => {
-    //     if (clickCount === 1) return <Popular />;
-    //     if (clickCount === 2) return <Part2 />;
-    //     return null;
-    // };
-    // const hidePage = clickCount > 0;
+    const getDropdownContent = () => {
+        if (clickCount === 1) return <Popular />;
+        if (clickCount === 2) return <WeeklyPopular />;
+        return null;
+    };
+    const hidePage = clickCount > 0;
 
     return (
         <div className="app-container">
@@ -81,12 +79,11 @@ const Header2 = () => {
                 </div>
             </header>
 
-            {/* Dropdown section removed */}
-            {/* {hidePage && (
+            {hidePage && (
                 <div className="popular-dropdown">
                     {getDropdownContent()}
                 </div>
-            )} */}
+            )}
         </div>
     );
 };

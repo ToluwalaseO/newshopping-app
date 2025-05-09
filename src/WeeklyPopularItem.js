@@ -3,9 +3,11 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { useNavigate } from 'react-router-dom'; // Added for navigation
 
 const WeeklyPopularItem = ({ item }) => {
     const [isFavorite, setIsFavorite] = React.useState(false);
+    const navigate = useNavigate(); // Added for navigation
 
     return (
         <div className="weekly-popular-item">
@@ -51,6 +53,25 @@ const WeeklyPopularItem = ({ item }) => {
                 </div>
                 <span className="item-number">({item.number})</span>
             </div>
+
+            {/* Added Add to Cart button */}
+            <button 
+                onClick={() => navigate("/product")} 
+                className="add-to-cart"
+                style={{
+                    width: '100%',
+                    padding: '0.5rem',
+                    background: 'white',
+                    color: 'black',
+                    border: '2px solid black',
+                    borderRadius: '24px',
+                    cursor: 'pointer',
+                    marginTop: '1rem',
+                    width: '120px'
+                }}
+            >
+                Add to Cart
+            </button>
         </div>
     );
 };

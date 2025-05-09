@@ -6,7 +6,7 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-family: Georgia, serif;
     width: 1300px;
-    height: 200px;
+    height: 262px;
     position: relative;
     left:50px;
     top:15px;
@@ -67,40 +67,44 @@
     color: #06924a;
   }
   
-  .topsectionpage-topbar2 button {
-    background-color: #06924a;
-    color: white;
-    border: none;
-    padding: 0.8rem 2rem;
-    font-size: 1rem;
-    border-radius: 4px;
-    cursor: pointer;
-    margin-top: 1.5rem;
-    transition: background-color 0.3s ease;
-  }
-  
-  /* .topsectionpage-topbar2 button:hover {
-    background-color: #c0392b;
-  }
-   */
-  /* Responsive adjustments */
-  /* @media (max-width: 768px) {
-    .topsectionpage-topbar {
-      flex-direction: column;
-      text-align: center;
-    }
-    
-    .topsectionpage-topbar2 h1 {
-      font-size: 2rem;
-    }
-    
-    .topsectionpage-image {
-      margin-bottom: 1.5rem;
-    }
-  }
-  
-  @media (max-width: 480px) {
-    .topsectionpage-topbar2 h1 {
-      font-size: 1.5rem;
-    }
-  } */
+ /* Add this to your TopSection.css file */
+
+.topsectionpage-topbar2 button {
+  background-color: #06924a;
+  color: white;
+  border: none;
+  padding: 0.8rem 2.5rem;
+  font-size: 1.1rem;
+  border-radius: 25px; /* More rounded corners */
+  cursor: pointer;
+  margin-top: 1.5rem;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  right: 150px;
+}
+
+.topsectionpage-topbar2 button:hover {
+  background-color: #057a3f; /* Slightly darker green */
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.topsectionpage-topbar2 button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Optional: Add a subtle "pulse" animation on hover */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.topsectionpage-topbar2 button:hover {
+  animation: pulse 1.5s infinite;
+}

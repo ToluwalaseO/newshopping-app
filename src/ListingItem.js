@@ -3,10 +3,10 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ListingItem = ({ item }) => {
-    // const navigate = useNavigate();
+     const navigate = useNavigate();
     const [isFavorite, setIsFavorite] = React.useState(false);
 
     return (
@@ -52,7 +52,7 @@ const ListingItem = ({ item }) => {
             <span className="item-number">({item.number})</span>
             </div>
             
-            {/* <button onClick={() => navigate("/product")} className="add-to-cart">Add to Cart</button> */}
+            <button onClick={() => navigate("/product")} className="add-to-cart">Add to Cart</button> 
         </div>
     );
 };

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './product.css';
+import './Product.css';
 import { useNavigate } from 'react-router-dom';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';

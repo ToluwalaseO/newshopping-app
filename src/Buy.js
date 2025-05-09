@@ -8,7 +8,15 @@ const Buy = () => {
                 <div className="checkout-section review-section">
                     <h2 className="section-title">Review Items And Shipping</h2>
                     <div className="product-info">
-                        <h3 className="product-name">AirPods Max</h3>
+                    <div className="product-image-container">
+                            <img 
+                                src="/airpodmaxs.png" 
+                                alt="AirPods Max Pink"
+                                className="product-image"
+                            />
+                        </div>
+                        <h3 className="product-name">AirPods- Max</h3>
+
                         <p className="product-price">$549.00</p>
                         <p className="product-detail"><span>Color:</span> Pink</p>
                         <p className="product-detail"><span>Quantity:</span> 4</p>
