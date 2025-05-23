@@ -5,7 +5,7 @@ import './Homepage.css'
 
 
 const Homepage = () => {
-    c
+    
     return (
         <header className="homepage" style={{ 
             backgroundImage: "url('backGrAnd.png')",
