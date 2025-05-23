@@ -1,11 +1,11 @@
 import React from "react";
 import './Homepage.css'
 
-// import { useNavigate } from 'react-router-dom';
+
 
 
 const Homepage = () => {
-    // const navigate = useNavigate()
+    c
     return (
         <header className="homepage" style={{ 
             backgroundImage: "url('backGrAnd.png')",

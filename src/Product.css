@@ -217,3 +217,67 @@
       font-size: 1.5rem;
     }
   }
+
+  /* Specifications Table */
+.specs-table-container {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #eee;
+  position: relative;
+  right: 500px;
+}
+
+.specs-table-title {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.specs-table {
+  display: flex;
+  gap: 2rem;
+}
+
+.specs-column {
+  flex: 1;
+}
+
+.spec-row {
+  display: flex;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #f5f5f5;
+}
+
+.spec-row:last-child {
+  border-bottom: none;
+}
+
+.spec-name {
+  font-weight: 500;
+  color: #666;
+  min-width: 140px;
+}
+
+.spec-value {
+  color: #666;
+  flex-grow: 1;
+  position: relative;
+  left:300px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .specs-table {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .specs-column {
+    margin-bottom: 1rem;
+  }
+  
+  .spec-name {
+    min-width: 120px;
+  }
+}

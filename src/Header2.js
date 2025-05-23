@@ -33,7 +33,7 @@ const Header2 = () => {
         <div className="app-container">
             <header className="header2">
                 <div className="header2-topbarsection">
-                    {/* topbar2 */}
+                   
                     <div className="header-topbar2">   
                     <ShoppingCartIcon />
                         <p>ShopCart</p>
@@ -49,7 +49,7 @@ const Header2 = () => {
                         <input
                         type="text"
                         placeholder="Search Product"
-                        style={{ paddingLeft: '40px' }} // Make space for the icon
+                        style={{ paddingLeft: '40px' }} 
                         />
                         <SearchIcon 
                         style={{

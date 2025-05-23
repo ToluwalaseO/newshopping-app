@@ -46,16 +46,15 @@ const items = [
 ];
 
 const Listing = () => {
-    // Pagination state
+   
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 12; 
 
-    // Calculate current items to display
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
 
-    // Handle page change
+    
     const handlePageChange = (event, value) => {
         setCurrentPage(value);
     };

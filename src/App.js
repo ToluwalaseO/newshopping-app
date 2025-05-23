@@ -17,8 +17,6 @@ import Product from "./Product";
 // Create a layout component for your home page structure
 const HomeLayout = () => (
   <div>
-    <Header />
-    <Header2 />
     <Homepage />
     <TopSection />
     <Header3 />
@@ -32,6 +30,8 @@ const HomeLayout = () => (
 function App() {
   return (
     <BrowserRouter>
+    <Header />
+    <Header2 />
       <Routes>
         <Route path="/" element={<HomeLayout />} />
         <Route path="/product" element={<Product />} />
