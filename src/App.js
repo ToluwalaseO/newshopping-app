@@ -23,18 +23,17 @@ const HomeLayout = () => (
     <Listing />
     <WeeklyPopular />
     <Services />
-    
   </div>
 );
 
 function App() {
   return (
     <BrowserRouter>
-    <Header />
-    <Header2 />
+      <Header />
+      <Header2 />
       <Routes>
         <Route path="/" element={<HomeLayout />} />
-        <Route path="/product" element={<Product />} />
+        <Route path="/product/:id" element={<Product />} /> {/* Updated to include product ID */}
         <Route path="/popular" element={<Popular />} />
         <Route path="/buy" element={<Buy />} />
       </Routes>
@@ -47,7 +46,7 @@ const rootElement = document.getElementById("root");
 if (rootElement) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
-    <React.StrictMode>  {/* Added StrictMode for development checks */}
+    <React.StrictMode>
       <App />
     </React.StrictMode>
   );

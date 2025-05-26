@@ -3,17 +3,41 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
-import { useNavigate } from 'react-router-dom'; // Added for navigation
+import { useNavigate } from 'react-router-dom';
 
 const WeeklyPopularItem = ({ item }) => {
     const [isFavorite, setIsFavorite] = React.useState(false);
-    const navigate = useNavigate(); // Added for navigation
+    const navigate = useNavigate();
+
+    // Handle click on the main container
+    const handleContainerClick = (e) => {
+        // Only navigate if the click wasn't on the favorite button or add to cart button
+        if (!e.target.closest('.add-to-favorites') && !e.target.closest('.add-to-cart')) {
+            navigate("/product");
+        }
+    };
+
+    // Prevent event bubbling for favorite button
+    const handleFavoriteClick = (e) => {
+        e.stopPropagation();
+        setIsFavorite(!isFavorite);
+    };
+
+    // Prevent event bubbling for add to cart button
+    const handleAddToCartClick = (e) => {
+        e.stopPropagation();
+        navigate("/product");
+    };
 
     return (
-        <div className="weekly-popular-item">
+        <div 
+            className="weekly-popular-item" 
+            onClick={handleContainerClick}
+            style={{ cursor: 'pointer' }} // Add pointer cursor to indicate clickability
+        >
             <button 
                 className="add-to-favorites"
-                onClick={() => setIsFavorite(!isFavorite)}
+                onClick={handleFavoriteClick}
             >
                 {isFavorite ? (
                     <FavoriteIcon color="error" />
@@ -54,9 +78,8 @@ const WeeklyPopularItem = ({ item }) => {
                 <span className="item-number">({item.number})</span>
             </div>
 
-            {/* Added Add to Cart button */}
             <button 
-                onClick={() => navigate("/product")} 
+                onClick={handleAddToCartClick} 
                 className="add-to-cart"
                 style={{
                     width: '100%',

@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Add this import
 import Popular from "./Popular"; 
 import WeeklyPopular from "./WeeklyPopular";
 import "./Header2.css";
@@ -9,6 +10,7 @@ import PersonIcon from '@mui/icons-material/Person';
 const Header2 = () => {
     const [clickCount, setClickCount] = useState(0);
     const searchRef = useRef(null);
+    const navigate = useNavigate(); // Initialize useNavigate
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -29,13 +31,22 @@ const Header2 = () => {
     };
     const hidePage = clickCount > 0;
 
+    // Function to handle ShopCart click
+    const handleShopCartClick = () => {
+        navigate("/"); // Navigate to the home route where Header2 is rendered
+    };
+
     return (
         <div className="app-container">
             <header className="header2">
                 <div className="header2-topbarsection">
                    
-                    <div className="header-topbar2">   
-                    <ShoppingCartIcon />
+                    <div 
+                        className="header-topbar2" 
+                        onClick={handleShopCartClick} // Add click handler
+                        style={{ cursor: 'pointer' }} // Add pointer cursor
+                    >   
+                        <ShoppingCartIcon />
                         <p>ShopCart</p>
                     </div>
                     

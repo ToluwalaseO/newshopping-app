@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './Product.css';
-import { useNavigate } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import AssignmentReturnIcon from '@mui/icons-material/AssignmentReturn';
 import StarIcon from '@mui/icons-material/Star';
@@ -8,42 +8,965 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
-const colors = [
-  { name: "Pink", hex: "#f4b5c2", image: "pinkairpods.png" },
-  { name: "Green", hex: "#a2c3a4", image: "greenairpods.png" },
-  { name: "Black", hex: "#444", image: "blackairpods.png" },
-  { name: "Blue", hex: "#c7d5f3", image: "blueairpods.png" },
-  { name: "Silver", hex: "#d0d0d0", image: "greyairpods.png" },
-];
+const productDatabase = {
+  1: {
+    name: 'Wireless Earbuds, IPXB',
+    price: '$89.00',
+    images: {
+      Pink: { image: "ipx8.png", hex: "#f4b5c2" },
+      Green: { image: "ipx8.png", hex: "#a2c3a4" },
+      Black: { image: "ipx8.png", hex: "#444" },
+      Blue: { image: "ipx8.png", hex: "#c7d5f3" },
+      Silver: { image: "ipx8.png", hex: "#d0d0d0" }
+    },
+    description: 'Organic Cotton, fairtrade certified.',
+    rating: 4,
+    reviews: 121,
+    brand: 'Generic',
+    model: 'IPXB',
+    weight: '50 grams',
+    dimensions: '2 x 2 x 1 inches',
+    material: 'Plastic',
+    batteryLife: 'Up to 8 hours',
+    noiseCancellation: 'Passive',
+    bluetooth: 'Version 5.0',
+    microphones: 2,
+    warranty: '6 months',
+    waterResistance: 'IPX8'
+  },
+  2: {
+    name: 'Airpods Max',
+    price: '$559.00',
+    images: {
+      Pink: { image: "pinkairpods.png", hex: "#f4b5c2" },
+      Green: { image: "greenairpods.png", hex: "#a2c3a4" },
+      Black: { image: "blackairpods.png", hex: "#444" },
+      Blue: { image: "blueairpods.png", hex: "#c7d5f3" },
+      Silver: { image: "greyairpods.png", hex: "#d0d0d0" }
+    },
+    description: 'A perfect balance of high-fidelity audio.',
+    rating: 5,
+    reviews: 127,
+    brand: 'Apple',
+    model: 'AirPods Max',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+  3: {
+    name: 'Base BT Earphones',
+    price: '$289.00',
+    images: {
+      Pink: { image: "basebt.png", hex: "#f4b5c2" },
+      Green: { image: "basebt.png", hex: "#a2c3a4" },
+      Black: { image: "basebt.png", hex: "#444" },
+      Blue: { image: "basebt.png", hex: "#c7d5f3" },
+      Silver: { image: "basebt.png", hex: "#d0d0d0" }
+    },
+    description: 'Table with air puffer, staired veneer/black.',
+    rating: 5,
+    reviews: 121,
+    brand: 'Basebt',
+    model: 'Base T Earphpones',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+  4: {
+    name: 'Vivefox Headphones',
+    price: '$39.00',
+    images: {
+      Pink: { image: "Vivefox.png", hex: "#f4b5c2" },
+      Green: { image: "Vivefox.png", hex: "#a2c3a4" },
+      Black: { image: "Vivefox.png", hex: "#444" },
+      Blue: { image: "Vivefox.png", hex: "#c7d5f3" },
+      Silver: { image: "Vivefox.png", hex: "#d0d0d0" }
+    },
+    description: 'Wired Stereo Headsets With Mic.',
+    rating: 4,
+    reviews: 121,
+    brand: 'Vivefox',
+    model: 'Vivefox Headphones',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+  5: {
+    name: 'JBL TUNE 600BTNC',
+    price: '$59.00',
+    images: {
+      Pink: { image: "JBL.png", hex: "#f4b5c2" },
+      Green: { image: "JBL.png", hex: "#a2c3a4" },
+      Black: { image: "JBL.png", hex: "#444" },
+      Blue: { image: "JBL.png", hex: "#c7d5f3" },
+      Silver: { image: "JBL.png", hex: "#d0d0d0" }
+    },
+    description: 'Premium Bone Conduction Open Ear Bluetooth.',
+    rating: 5,
+    reviews: 121,
+    brand: 'JBL',
+    model: 'JBL TUNE 600BTNC',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+  6: {
+    name: 'TAGRY Bluetooth',
+    price: '$109.00',
+    images: {
+      Pink: { image: "targy.png", hex: "#f4b5c2" },
+      Green: { image: "targy.png", hex: "#a2c3a4" },
+      Black: { image: "targy.png", hex: "#444" },
+      Blue: { image: "targy.png", hex: "#c7d5f3" },
+      Silver: { image: "targy.png", hex: "#d0d0d0" }
+    },
+    description: 'Wireless headphones with long battery life.',
+    rating: 5,
+    reviews: 127,
+    brand: 'Targy',
+    model: 'TAGRY Bluetooth',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+  7: {
+    name: 'Monster MNFLEX',
+    price: '$89.75',
+    images: {
+      Pink: { image: "Monster.png", hex: "#f4b5c2" },
+      Green: { image: "Monster.png", hex: "#a2c3a4" },
+      Black: { image: "Monster.png", hex: "#444" },
+      Blue: { image: "Monster.png", hex: "#c7d5f3" },
+      Silver: { image: "Monster.png", hex: "#d0d0d0" }
+    },
+    description: 'Flex Active Noise Cancelling Bluetooth.',
+    rating: 4,
+    reviews: 127,
+    brand: 'Monster',
+    model: 'Monster MNFLEX',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+  8: {
+    name: 'Mpow CH6',
+    price: '$559.00',
+    images: {
+      Pink: { image: "Mpow.png", hex: "#f4b5c2" },
+      Green: { image: "Mpow.png", hex: "#a2c3a4" },
+      Black: { image: "Mpow.png", hex: "#444" },
+      Blue: { image: "Mpow.png", hex: "#c7d5f3" },
+      Silver: { image: "Mpow.png", hex: "#d0d0d0" }
+    },
+    description: 'A perfect balance of high-fidelity audio.',
+    rating: 5,
+    reviews: 127,
+    brand: 'Mpow',
+    model: 'Mpow CH6',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   9: {
+    name: 'Vivefox Headphones',
+    price: '$39.00',
+    images: {
+      Pink: { image: "Vivefox.png", hex: "#f4b5c2" },
+      Green: { image: "Vivefox.png", hex: "#a2c3a4" },
+      Black: { image: "Vivefox.png", hex: "#444" },
+      Blue: { image: "Vivefox.png", hex: "#c7d5f3" },
+      Silver: { image: "Vivefox.png", hex: "#d0d0d0" }
+    },
+    description: 'Wired Stereo Headsets With Mic.',
+    rating: 4,
+    reviews: 121,
+    brand: 'Vivefox',
+    model: 'Vivefox Headphones',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   10:{
+    name: 'JBL TUNE 600BTNC',
+    price: '$59.00',
+    images: {
+      Pink: { image: "JBL.png", hex: "#f4b5c2" },
+      Green: { image: "JBL.png", hex: "#a2c3a4" },
+      Black: { image: "JBL.png", hex: "#444" },
+      Blue: { image: "JBL.png", hex: "#c7d5f3" },
+      Silver: { image: "JBL.png", hex: "#d0d0d0" }
+    },
+    description: 'Premium Bone Conduction Open Ear Bluetooth.',
+    rating: 5,
+    reviews: 121,
+    brand: 'JBL',
+    model: 'JBL TUNE 600BTNC',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   11 :{
+    name: 'Wireless Earbuds, IPXB',
+    price: '$89.00',
+    images: {
+      Pink: { image: "ipx8.png", hex: "#f4b5c2" },
+      Green: { image: "ipx8.png", hex: "#a2c3a4" },
+      Black: { image: "ipx8.png", hex: "#444" },
+      Blue: { image: "ipx8.png", hex: "#c7d5f3" },
+      Silver: { image: "ipx8.png", hex: "#d0d0d0" }
+    },
+    description: 'Organic Cotton, fairtrade certified.',
+    rating: 4,
+    reviews: 121,
+    brand: 'Generic',
+    model: 'IPXB',
+    weight: '50 grams',
+    dimensions: '2 x 2 x 1 inches',
+    material: 'Plastic',
+    batteryLife: 'Up to 8 hours',
+    noiseCancellation: 'Passive',
+    bluetooth: 'Version 5.0',
+    microphones: 2,
+    warranty: '6 months',
+    waterResistance: 'IPX8'
+  },
+   12: {
+    name: 'Airpods Max',
+    price: '$559.00',
+    images: {
+      Pink: { image: "pinkairpods.png", hex: "#f4b5c2" },
+      Green: { image: "greenairpods.png", hex: "#a2c3a4" },
+      Black: { image: "blackairpods.png", hex: "#444" },
+      Blue: { image: "blueairpods.png", hex: "#c7d5f3" },
+      Silver: { image: "greyairpods.png", hex: "#d0d0d0" }
+    },
+    description: 'A perfect balance of high-fidelity audio.',
+    rating: 5,
+    reviews: 127,
+    brand: 'Apple',
+    model: 'AirPods Max',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   13: {
+    name: 'Vivefox Headphones',
+    price: '$39.00',
+    images: {
+      Pink: { image: "Vivefox.png", hex: "#f4b5c2" },
+      Green: { image: "Vivefox.png", hex: "#a2c3a4" },
+      Black: { image: "Vivefox.png", hex: "#444" },
+      Blue: { image: "Vivefox.png", hex: "#c7d5f3" },
+      Silver: { image: "Vivefox.png", hex: "#d0d0d0" }
+    },
+    description: 'Wired Stereo Headsets With Mic.',
+    rating: 4,
+    reviews: 121,
+    brand: 'Vivefox',
+    model: 'Vivefox Headphones',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   14:{
+    name: 'JBL TUNE 600BTNC',
+    price: '$59.00',
+    images: {
+      Pink: { image: "JBL.png", hex: "#f4b5c2" },
+      Green: { image: "JBL.png", hex: "#a2c3a4" },
+      Black: { image: "JBL.png", hex: "#444" },
+      Blue: { image: "JBL.png", hex: "#c7d5f3" },
+      Silver: { image: "JBL.png", hex: "#d0d0d0" }
+    },
+    description: 'Premium Bone Conduction Open Ear Bluetooth.',
+    rating: 5,
+    reviews: 121,
+    brand: 'JBL',
+    model: 'JBL TUNE 600BTNC',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+  15:{
+    name: 'Wireless Earbuds, IPXB',
+    price: '$89.00',
+    images: {
+      Pink: { image: "ipx8.png", hex: "#f4b5c2" },
+      Green: { image: "ipx8.png", hex: "#a2c3a4" },
+      Black: { image: "ipx8.png", hex: "#444" },
+      Blue: { image: "ipx8.png", hex: "#c7d5f3" },
+      Silver: { image: "ipx8.png", hex: "#d0d0d0" }
+    },
+    description: 'Organic Cotton, fairtrade certified.',
+    rating: 4,
+    reviews: 121,
+    brand: 'Generic',
+    model: 'IPXB',
+    weight: '50 grams',
+    dimensions: '2 x 2 x 1 inches',
+    material: 'Plastic',
+    batteryLife: 'Up to 8 hours',
+    noiseCancellation: 'Passive',
+    bluetooth: 'Version 5.0',
+    microphones: 2,
+    warranty: '6 months',
+    waterResistance: 'IPX8'
+  },
+   16: {
+    name: 'Airpods Max',
+    price: '$559.00',
+    images: {
+      Pink: { image: "pinkairpods.png", hex: "#f4b5c2" },
+      Green: { image: "greenairpods.png", hex: "#a2c3a4" },
+      Black: { image: "blackairpods.png", hex: "#444" },
+      Blue: { image: "blueairpods.png", hex: "#c7d5f3" },
+      Silver: { image: "greyairpods.png", hex: "#d0d0d0" }
+    },
+    description: 'A perfect balance of high-fidelity audio.',
+    rating: 5,
+    reviews: 127,
+    brand: 'Apple',
+    model: 'AirPods Max',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   
+   17: {
+    name: 'Wireless Earbuds, IPXB',
+    price: '$89.00',
+    images: {
+      Pink: { image: "ipx8.png", hex: "#f4b5c2" },
+      Green: { image: "ipx8.png", hex: "#a2c3a4" },
+      Black: { image: "ipx8.png", hex: "#444" },
+      Blue: { image: "ipx8.png", hex: "#c7d5f3" },
+      Silver: { image: "ipx8.png", hex: "#d0d0d0" }
+    },
+    description: 'Organic Cotton, fairtrade certified.',
+    rating: 4,
+    reviews: 121,
+    brand: 'Generic',
+    model: 'IPXB',
+    weight: '50 grams',
+    dimensions: '2 x 2 x 1 inches',
+    material: 'Plastic',
+    batteryLife: 'Up to 8 hours',
+    noiseCancellation: 'Passive',
+    bluetooth: 'Version 5.0',
+    microphones: 2,
+    warranty: '6 months',
+    waterResistance: 'IPX8'
+  },
+   18: {
+    name: 'Airpods Max',
+    price: '$559.00',
+    images: {
+      Pink: { image: "pinkairpods.png", hex: "#f4b5c2" },
+      Green: { image: "greenairpods.png", hex: "#a2c3a4" },
+      Black: { image: "blackairpods.png", hex: "#444" },
+      Blue: { image: "blueairpods.png", hex: "#c7d5f3" },
+      Silver: { image: "greyairpods.png", hex: "#d0d0d0" }
+    },
+    description: 'A perfect balance of high-fidelity audio.',
+    rating: 5,
+    reviews: 127,
+    brand: 'Apple',
+    model: 'AirPods Max',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   19: {
+    name: 'Base BT Earphones',
+    price: '$289.00',
+    images: {
+      Pink: { image: "basebt.png", hex: "#f4b5c2" },
+      Green: { image: "basebt.png", hex: "#a2c3a4" },
+      Black: { image: "basebt.png", hex: "#444" },
+      Blue: { image: "basebt.png", hex: "#c7d5f3" },
+      Silver: { image: "basebt.png", hex: "#d0d0d0" }
+    },
+    description: 'Table with air puffer, staired veneer/black.',
+    rating: 5,
+    reviews: 121,
+    brand: 'Basebt',
+    model: 'Base T Earphpones',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   20: {
+    name: 'Vivefox Headphones',
+    price: '$39.00',
+    images: {
+      Pink: { image: "Vivefox.png", hex: "#f4b5c2" },
+      Green: { image: "Vivefox.png", hex: "#a2c3a4" },
+      Black: { image: "Vivefox.png", hex: "#444" },
+      Blue: { image: "Vivefox.png", hex: "#c7d5f3" },
+      Silver: { image: "Vivefox.png", hex: "#d0d0d0" }
+    },
+    description: 'Wired Stereo Headsets With Mic.',
+    rating: 4,
+    reviews: 121,
+    brand: 'Vivefox',
+    model: 'Vivefox Headphones',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   21:{
+    name: 'JBL TUNE 600BTNC',
+    price: '$59.00',
+    images: {
+      Pink: { image: "JBL.png", hex: "#f4b5c2" },
+      Green: { image: "JBL.png", hex: "#a2c3a4" },
+      Black: { image: "JBL.png", hex: "#444" },
+      Blue: { image: "JBL.png", hex: "#c7d5f3" },
+      Silver: { image: "JBL.png", hex: "#d0d0d0" }
+    },
+    description: 'Premium Bone Conduction Open Ear Bluetooth.',
+    rating: 5,
+    reviews: 121,
+    brand: 'JBL',
+    model: 'JBL TUNE 600BTNC',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   22: {
+    name: 'TAGRY Bluetooth',
+    price: '$109.00',
+    images: {
+      Pink: { image: "targy.png", hex: "#f4b5c2" },
+      Green: { image: "targy.png", hex: "#a2c3a4" },
+      Black: { image: "targy.png", hex: "#444" },
+      Blue: { image: "targy.png", hex: "#c7d5f3" },
+      Silver: { image: "targy.png", hex: "#d0d0d0" }
+    },
+    description: 'Wireless headphones with long battery life.',
+    rating: 5,
+    reviews: 127,
+    brand: 'Targy',
+    model: 'TAGRY Bluetooth',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   23:  {
+    name: 'Monster MNFLEX',
+    price: '$89.75',
+    images: {
+      Pink: { image: "Monster.png", hex: "#f4b5c2" },
+      Green: { image: "Monster.png", hex: "#a2c3a4" },
+      Black: { image: "Monster.png", hex: "#444" },
+      Blue: { image: "Monster.png", hex: "#c7d5f3" },
+      Silver: { image: "Monster.png", hex: "#d0d0d0" }
+    },
+    description: 'Flex Active Noise Cancelling Bluetooth.',
+    rating: 4,
+    reviews: 127,
+    brand: 'Monster',
+    model: 'Monster MNFLEX',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   24: {
+    name: 'Mpow CH6',
+    price: '$559.00',
+    images: {
+      Pink: { image: "Mpow.png", hex: "#f4b5c2" },
+      Green: { image: "Mpow.png", hex: "#a2c3a4" },
+      Black: { image: "Mpow.png", hex: "#444" },
+      Blue: { image: "Mpow.png", hex: "#c7d5f3" },
+      Silver: { image: "Mpow.png", hex: "#d0d0d0" }
+    },
+    description: 'A perfect balance of high-fidelity audio.',
+    rating: 5,
+    reviews: 127,
+    brand: 'Mpow',
+    model: 'Mpow CH6',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   25:  {
+    name: 'Vivefox Headphones',
+    price: '$39.00',
+    images: {
+      Pink: { image: "Vivefox.png", hex: "#f4b5c2" },
+      Green: { image: "Vivefox.png", hex: "#a2c3a4" },
+      Black: { image: "Vivefox.png", hex: "#444" },
+      Blue: { image: "Vivefox.png", hex: "#c7d5f3" },
+      Silver: { image: "Vivefox.png", hex: "#d0d0d0" }
+    },
+    description: 'Wired Stereo Headsets With Mic.',
+    rating: 4,
+    reviews: 121,
+    brand: 'Vivefox',
+    model: 'Vivefox Headphones',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   26: {
+    name: 'JBL TUNE 600BTNC',
+    price: '$59.00',
+    images: {
+      Pink: { image: "JBL.png", hex: "#f4b5c2" },
+      Green: { image: "JBL.png", hex: "#a2c3a4" },
+      Black: { image: "JBL.png", hex: "#444" },
+      Blue: { image: "JBL.png", hex: "#c7d5f3" },
+      Silver: { image: "JBL.png", hex: "#d0d0d0" }
+    },
+    description: 'Premium Bone Conduction Open Ear Bluetooth.',
+    rating: 5,
+    reviews: 121,
+    brand: 'JBL',
+    model: 'JBL TUNE 600BTNC',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   27: {
+    name: 'Wireless Earbuds, IPXB',
+    price: '$89.00',
+    images: {
+      Pink: { image: "ipx8.png", hex: "#f4b5c2" },
+      Green: { image: "ipx8.png", hex: "#a2c3a4" },
+      Black: { image: "ipx8.png", hex: "#444" },
+      Blue: { image: "ipx8.png", hex: "#c7d5f3" },
+      Silver: { image: "ipx8.png", hex: "#d0d0d0" }
+    },
+    description: 'Organic Cotton, fairtrade certified.',
+    rating: 4,
+    reviews: 121,
+    brand: 'Generic',
+    model: 'IPXB',
+    weight: '50 grams',
+    dimensions: '2 x 2 x 1 inches',
+    material: 'Plastic',
+    batteryLife: 'Up to 8 hours',
+    noiseCancellation: 'Passive',
+    bluetooth: 'Version 5.0',
+    microphones: 2,
+    warranty: '6 months',
+    waterResistance: 'IPX8'
+  },
+   28: {
+    name: 'Airpods Max',
+    price: '$559.00',
+    images: {
+      Pink: { image: "pinkairpods.png", hex: "#f4b5c2" },
+      Green: { image: "greenairpods.png", hex: "#a2c3a4" },
+      Black: { image: "blackairpods.png", hex: "#444" },
+      Blue: { image: "blueairpods.png", hex: "#c7d5f3" },
+      Silver: { image: "greyairpods.png", hex: "#d0d0d0" }
+    },
+    description: 'A perfect balance of high-fidelity audio.',
+    rating: 5,
+    reviews: 127,
+    brand: 'Apple',
+    model: 'AirPods Max',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   29:{
+    name: 'JBL TUNE 600BTNC',
+    price: '$59.00',
+    images: {
+      Pink: { image: "JBL.png", hex: "#f4b5c2" },
+      Green: { image: "JBL.png", hex: "#a2c3a4" },
+      Black: { image: "JBL.png", hex: "#444" },
+      Blue: { image: "JBL.png", hex: "#c7d5f3" },
+      Silver: { image: "JBL.png", hex: "#d0d0d0" }
+    },
+    description: 'Premium Bone Conduction Open Ear Bluetooth.',
+    rating: 5,
+    reviews: 121,
+    brand: 'JBL',
+    model: 'JBL TUNE 600BTNC',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   30: {
+    name: 'Wireless Earbuds, IPXB',
+    price: '$89.00',
+    images: {
+      Pink: { image: "ipx8.png", hex: "#f4b5c2" },
+      Green: { image: "ipx8.png", hex: "#a2c3a4" },
+      Black: { image: "ipx8.png", hex: "#444" },
+      Blue: { image: "ipx8.png", hex: "#c7d5f3" },
+      Silver: { image: "ipx8.png", hex: "#d0d0d0" }
+    },
+    description: 'Organic Cotton, fairtrade certified.',
+    rating: 4,
+    reviews: 121,
+    brand: 'Generic',
+    model: 'IPXB',
+    weight: '50 grams',
+    dimensions: '2 x 2 x 1 inches',
+    material: 'Plastic',
+    batteryLife: 'Up to 8 hours',
+    noiseCancellation: 'Passive',
+    bluetooth: 'Version 5.0',
+    microphones: 2,
+    warranty: '6 months',
+    waterResistance: 'IPX8'
+  },
+   31: {
+    name: 'Airpods Max',
+    price: '$559.00',
+    images: {
+      Pink: { image: "pinkairpods.png", hex: "#f4b5c2" },
+      Green: { image: "greenairpods.png", hex: "#a2c3a4" },
+      Black: { image: "blackairpods.png", hex: "#444" },
+      Blue: { image: "blueairpods.png", hex: "#c7d5f3" },
+      Silver: { image: "greyairpods.png", hex: "#d0d0d0" }
+    },
+    description: 'A perfect balance of high-fidelity audio.',
+    rating: 5,
+    reviews: 127,
+    brand: 'Apple',
+    model: 'AirPods Max',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   32:{
+    name: 'Vivefox Headphones',
+    price: '$39.00',
+    images: {
+      Pink: { image: "Vivefox.png", hex: "#f4b5c2" },
+      Green: { image: "Vivefox.png", hex: "#a2c3a4" },
+      Black: { image: "Vivefox.png", hex: "#444" },
+      Blue: { image: "Vivefox.png", hex: "#c7d5f3" },
+      Silver: { image: "Vivefox.png", hex: "#d0d0d0" }
+    },
+    description: 'Wired Stereo Headsets With Mic.',
+    rating: 4,
+    reviews: 121,
+    brand: 'Vivefox',
+    model: 'Vivefox Headphones',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   33:{
+    name: 'JBL TUNE 600BTNC',
+    price: '$59.00',
+    images: {
+      Pink: { image: "JBL.png", hex: "#f4b5c2" },
+      Green: { image: "JBL.png", hex: "#a2c3a4" },
+      Black: { image: "JBL.png", hex: "#444" },
+      Blue: { image: "JBL.png", hex: "#c7d5f3" },
+      Silver: { image: "JBL.png", hex: "#d0d0d0" }
+    },
+    description: 'Premium Bone Conduction Open Ear Bluetooth.',
+    rating: 5,
+    reviews: 121,
+    brand: 'JBL',
+    model: 'JBL TUNE 600BTNC',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   34: {
+    name: 'Wireless Earbuds, IPXB',
+    price: '$89.00',
+    images: {
+      Pink: { image: "ipx8.png", hex: "#f4b5c2" },
+      Green: { image: "ipx8.png", hex: "#a2c3a4" },
+      Black: { image: "ipx8.png", hex: "#444" },
+      Blue: { image: "ipx8.png", hex: "#c7d5f3" },
+      Silver: { image: "ipx8.png", hex: "#d0d0d0" }
+    },
+    description: 'Organic Cotton, fairtrade certified.',
+    rating: 4,
+    reviews: 121,
+    brand: 'Generic',
+    model: 'IPXB',
+    weight: '50 grams',
+    dimensions: '2 x 2 x 1 inches',
+    material: 'Plastic',
+    batteryLife: 'Up to 8 hours',
+    noiseCancellation: 'Passive',
+    bluetooth: 'Version 5.0',
+    microphones: 2,
+    warranty: '6 months',
+    waterResistance: 'IPX8'
+  },
+   35: {
+    name: 'Airpods Max',
+    price: '$559.00',
+    images: {
+      Pink: { image: "pinkairpods.png", hex: "#f4b5c2" },
+      Green: { image: "greenairpods.png", hex: "#a2c3a4" },
+      Black: { image: "blackairpods.png", hex: "#444" },
+      Blue: { image: "blueairpods.png", hex: "#c7d5f3" },
+      Silver: { image: "greyairpods.png", hex: "#d0d0d0" }
+    },
+    description: 'A perfect balance of high-fidelity audio.',
+    rating: 5,
+    reviews: 127,
+    brand: 'Apple',
+    model: 'AirPods Max',
+    weight: '384.8 grams',
+    dimensions: '6.64 x 3.28 x 7.37 inches',
+    material: 'Aluminum, Stainless Steel',
+    batteryLife: 'Up to 20 hours',
+    noiseCancellation: 'Active',
+    bluetooth: 'Version 5.0',
+    microphones: 8,
+    warranty: '1 Year',
+    waterResistance: 'Sweat resistant'
+  },
+   36:  {
+    name: 'Wireless Earbuds, IPXB',
+    price: '$89.00',
+    images: {
+      Pink: { image: "ipx8.png", hex: "#f4b5c2" },
+      Green: { image: "ipx8.png", hex: "#a2c3a4" },
+      Black: { image: "ipx8.png", hex: "#444" },
+      Blue: { image: "ipx8.png", hex: "#c7d5f3" },
+      Silver: { image: "ipx8.png", hex: "#d0d0d0" }
+    },
+    description: 'Organic Cotton, fairtrade certified.',
+    rating: 4,
+    reviews: 121,
+    brand: 'Generic',
+    model: 'IPXB',
+    weight: '50 grams',
+    dimensions: '2 x 2 x 1 inches',
+    material: 'Plastic',
+    batteryLife: 'Up to 8 hours',
+    noiseCancellation: 'Passive',
+    bluetooth: 'Version 5.0',
+    microphones: 2,
+    warranty: '6 months',
+    waterResistance: 'IPX8'
+  },
+     
+  
 
+
+
+};
 const Product = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const [selectedColor, setSelectedColor] = useState(colors[0]);
+  const [selectedColor, setSelectedColor] = useState(null);
   const [isAddingToCart, setIsAddingToCart] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Fetch product data based on ID
+    const foundProduct = productDatabase[id];
+    if (foundProduct) {
+      setProduct(foundProduct);
+      // Set the first color as default
+      const firstColor = Object.keys(foundProduct.images)[0];
+      setSelectedColor({
+        name: firstColor,
+        hex: foundProduct.images[firstColor].hex,
+        image: foundProduct.images[firstColor].image
+      });
+    }
+  }, [id]);
+
+  if (!product) {
+    return <div>Loading...</div>;
+  }
+
+  const colors = Object.entries(product.images).map(([name, data]) => ({
+    name,
+    hex: data.hex,
+    image: data.image
+  }));
 
   const specifications = [
-    
     [
-      { name: "Brand", value: "Apple" },
-      { name: "Model", value: "AirPods Max" },
-      { name: "Color", value: selectedColor.name },
-      { name: "Weight", value: "384.8 grams" },
-      { name: "Dimensions", value: "6.64 x 3.28 x 7.37 inches" },
-      { name: "Material", value: "Aluminum, Stainless Steel" },
-      { name: "Battery Life", value: "Up to 20 hours" },
+      { name: "Brand", value: product.brand },
+      { name: "Model", value: product.model },
+      { name: "Color", value: selectedColor?.name || '' },
+      { name: "Weight", value: product.weight },
+      { name: "Dimensions", value: product.dimensions },
+      { name: "Material", value: product.material },
+      { name: "Battery Life", value: product.batteryLife },
     ],
-    
     [
-      { name: "Noise Cancellation", value: "Active Noise Cancellation" },
-      { name: "Transparency Mode", value: "Yes" },
-      { name: "Spatial Audio", value: "Yes with head tracking" },
-      { name: "Bluetooth", value: "Version 5.0" },
-      { name: "Microphones", value: "8 total" },
-      { name: "Warranty", value: "1 Year Limited" },
-      { name: "Water Resistance", value: "Sweat resistant" },
+      { name: "Noise Cancellation", value: product.noiseCancellation },
+      { name: "Bluetooth", value: product.bluetooth },
+      { name: "Microphones", value: product.microphones },
+      { name: "Warranty", value: product.warranty },
+      { name: "Water Resistance", value: product.waterResistance },
     ]
   ];
-
   const handleQuantityChange = (type) => {
     setQuantity(prev => type === "increment" ? prev + 1 : prev > 1 ? prev - 1 : 1);
   };
@@ -53,7 +976,6 @@ const Product = () => {
     setTimeout(() => setIsAddingToCart(false), 1000);
   };
 
-  const navigate = useNavigate();
 
   const renderRating = () => {
     return Array(5).fill().map((_, i) => (
@@ -69,25 +991,28 @@ const Product = () => {
     <div className="product-container">
       <div className="product-card">
         <div className="product-grid">
-          
           <div className="product-image-section">
-            <img
-              src={`./${selectedColor.image}`}
-              alt={`AirPods Max in ${selectedColor.name}`}
-              className="product-image"
-            />
+            {selectedColor && (
+              <img
+                src={`/images/${selectedColor.image}`} // Updated path
+                alt={`${product.name} in ${selectedColor.name}`}
+                className="product-image"
+                onError={(e) => {
+                  e.target.src = '/images/placeholder.png'; // Fallback image
+                }}
+              />
+            )}
             <div className="color-selector">
-              <p className="color-label">Color: {selectedColor.name}</p>
+              <p className="color-label">Color: {selectedColor?.name}</p>
               <div className="color-options">
                 {colors.map((color) => (
                   <button
                     key={color.name}
                     className={`color-swatch ${
-                      selectedColor.name === color.name ? "selected" : ""
+                      selectedColor?.name === color.name ? "selected" : ""
                     }`}
                     style={{ backgroundColor: color.hex }}
                     onClick={() => handleColorSelect(color)}
-                    aria-label={`Select ${color.name} color`}
                   />
                 ))}
               </div>
@@ -96,14 +1021,14 @@ const Product = () => {
 
           
           <div className="product-details-section">
-            <h1 className="product-title">AirPods Max - {selectedColor.name}</h1>
-            <p className="product-price">$549.00</p>
-            <p className="product-rating">
-              {renderRating()} (127 reviews)
-            </p>
+           <h1 className="product-title">{product.name} - {selectedColor.name}</h1>
+           <p className="product-price">{product.price}</p>
+           <p className="product-rating">
+           {renderRating()} ({product.reviews} reviews)
+           </p>
             
             <div className="product-description">
-              <p>A perfect balance of exhilarating high-fidelity audio and the effortless magic of AirPods.</p>
+              <p>{product.description}</p>
             </div>
 
             <div className="quantity-selector">
