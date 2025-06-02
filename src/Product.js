@@ -986,6 +986,7 @@ const Product = () => {
   const handleColorSelect = (color) => {
     setSelectedColor(color);
   };
+  
 
   return (
     <div className="product-container">
@@ -994,12 +995,13 @@ const Product = () => {
           <div className="product-image-section">
             {selectedColor && (
               <img
-                src={`/images/${selectedColor.image}`} // Updated path
+                // src={selectedColor.image} // Updated path
+                src={`/${selectedColor.image}`}
                 alt={`${product.name} in ${selectedColor.name}`}
                 className="product-image"
-                onError={(e) => {
-                  e.target.src = '/images/placeholder.png'; // Fallback image
-                }}
+                // onError={(e) => {
+                //   e.target.src = '/images/placeholder.png'; // Fallback image
+                // }}
               />
             )}
             <div className="color-selector">
